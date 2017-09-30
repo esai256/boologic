@@ -1,0 +1,18 @@
+{
+  "dependencies": {
+    "gulp": "^3.9.1"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-plugin-transform-es2015-modules-amd": "^6.24.1",
+    "babel-preset-env": "^1.6.0",
+    "gulp-babel": "^7.0.0",
+    "gulp-beautify": "^2.0.1",
+    "gulp-eslint": "^4.0.0",
+    "gulp-live-server": "^0.0.31",
+    "gulp-notify": "^3.0.0",
+    "gulp-plumber": "^1.1.0",
+    "gulp-sequence": "^0.4.6",
+    "requirejs": "^2.3.5"
+  }
+}
