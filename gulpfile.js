@@ -16,6 +16,11 @@ const JS_DEV_SOURCE = "./dev";
 const JS_SOURCE = "./src";
 const JS_DESTINATION = "./dist";
 
+gulp.task("localAutosave", function() {
+    return gulp.src(`${JS_SOURCE}/${ALL_JS_FILES}`)
+        .pipe(gulp.dest("./local_autosave"));
+});
+
 gulp.task("lint", function() {
     return gulp.src(`${JS_SOURCE}/${ALL_JS_FILES}`)
         .pipe(eslint(eslintRc))
@@ -88,7 +93,7 @@ gulp.task("build", function() {
 });
 
 gulp.task("develop", function(callback) {
-    return sequence("beautify", ["lint", "build"], callback);
+    return sequence("beautify", ["lint", "build"], "localAutosave", callback);
 });
 
 gulp.task("watch-develop", function() {
