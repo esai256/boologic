@@ -1,48 +1,70 @@
-define(["exports"], function (exports) {
+define(["exports", "../node_modules/lodash/lodash.js"], function (exports, _lodash) {
     "use strict";
 
     Object.defineProperty(exports, "__esModule", {
         value: true
     });
+    exports.POSSIBILLITY_ENUM = undefined;
+    exports.checkIfValueMatchesData = checkIfValueMatchesData;
 
-    function _classCallCheck(instance, Constructor) {
-        if (!(instance instanceof Constructor)) {
-            throw new TypeError("Cannot call a class as a function");
-        }
+    var _lodash2 = _interopRequireDefault(_lodash);
+
+    function _interopRequireDefault(obj) {
+        return obj && obj.__esModule ? obj : {
+            default: obj
+        };
     }
 
-    var _createClass = function () {
-        function defineProperties(target, props) {
-            for (var i = 0; i < props.length; i++) {
-                var descriptor = props[i];
-                descriptor.enumerable = descriptor.enumerable || false;
-                descriptor.configurable = true;
-                if ("value" in descriptor) descriptor.writable = true;
-                Object.defineProperty(target, descriptor.key, descriptor);
-            }
-        }
+    var FIRST_INDEX = 0;
 
-        return function (Constructor, protoProps, staticProps) {
-            if (protoProps) defineProperties(Constructor.prototype, protoProps);
-            if (staticProps) defineProperties(Constructor, staticProps);
-            return Constructor;
+    var POSSIBILLITY_ENUM = exports.POSSIBILLITY_ENUM = {
+        NA: 0,
+        Impossible: 1,
+        Possible: 2,
+        Definitive: 3
+    };
+
+    function checkIfValueMatchesData(value, data, dataCollection) {
+        var key = _lodash2.default.keys(value)[FIRST_INDEX];
+        var result = POSSIBILLITY_ENUM.NA;
+        var otherDataCollection = _lodash2.default.without(dataCollection, data);
+
+        var isPropertyNotYetSet = function isPropertyNotYetSet() {
+            return data[key] == null;
         };
-    }();
 
-    var Test = exports.Test = function () {
-        function Test() {
-            _classCallCheck(this, Test);
+        var isNotYetSetAnywhereElse = function isNotYetSetAnywhereElse() {
+            return _lodash2.default.find(otherDataCollection, function (otherData) {
+                return otherData[key] == value[key];
+            }) == null;
+        };
+
+        var worksWithDependencies = function worksWithDependencies(dataToCheck) {
+            return _lodash2.default.every(dataToCheck.dependencies, function (dependency) {
+                return dependency(value);
+            });
+        };
+
+        var allOtherFieldsAreSet = function allOtherFieldsAreSet() {
+            return _lodash2.default.every(otherDataCollection, function (otherData) {
+                return Boolean(otherData[key]);
+            });
+        };
+
+        var isStrikedInEveryOtherData = function isStrikedInEveryOtherData() {
+            return _lodash2.default.every(otherDataCollection, function (otherData) {
+                return !worksWithDependencies(otherData);
+            });
+        };
+
+        if (!isPropertyNotYetSet() || !isNotYetSetAnywhereElse() || !worksWithDependencies(data)) {
+            result = POSSIBILLITY_ENUM.Impossible;
+        } else if (allOtherFieldsAreSet() || isStrikedInEveryOtherData()) {
+            result = POSSIBILLITY_ENUM.Definitive;
+        } else {
+            result = POSSIBILLITY_ENUM.Possible;
         }
 
-        _createClass(Test, [{
-            key: "a",
-            get: function get() {
-                return 5;
-            }
-        }]);
-
-        return Test;
-    }();
-
-    alert("test2 Dinge und Sachen");
+        return result;
+    }
 });
