@@ -1,11 +1,13 @@
 {
   "dependencies": {
-    "gulp": "^3.9.1"
+    "gulp": "^3.9.1",
+    "lodash": "^4.17.4"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
     "babel-plugin-transform-es2015-modules-amd": "^6.24.1",
     "babel-preset-env": "^1.6.0",
+    "chai": "^4.1.2",
     "gulp-babel": "^7.0.0",
     "gulp-beautify": "^2.0.1",
     "gulp-eslint": "^4.0.0",
