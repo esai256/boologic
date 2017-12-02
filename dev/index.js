@@ -7,7 +7,7 @@ export const POSSIBILLITY_ENUM = {
     Possible: 2,
     Definitive: 3
 };
-
+//{haus: "gelb"}{nationalität: "japaner", zigaretten: "parliament"}, [{nationalität: "japaner", zigaretten: "parliament"}]
 export function checkIfValueMatchesData(value, data, dataCollection) {
     const key = _.keys(value)[FIRST_INDEX];
     let result = POSSIBILLITY_ENUM.NA;
@@ -37,6 +37,23 @@ export function checkIfValueMatchesData(value, data, dataCollection) {
     {
         result = POSSIBILLITY_ENUM.Possible;
     }
+
+    return result;
+}
+
+export function checkIfDataMatchesData(dataToCheck, data, dataCollection) {
+    let result = POSSIBILLITY_ENUM.NA;
+    let otherDataCollection = _.without(dataCollection, dataToCheck);
+
+    _.forEach(Object.keys(dataToCheck), propertyName => {
+        let valueToCheck = {[propertyName]: dataToCheck[propertyName]};
+        let partialResult = checkIfValueMatchesData(valueToCheck, data, otherDataCollection);
+
+        result = result == POSSIBILLITY_ENUM.NA || result > partialResult ? partialResult : result;
+
+        //stop iteration if Impossible is already reached
+        return result != POSSIBILLITY_ENUM.Impossible;
+    });
 
     return result;
 }

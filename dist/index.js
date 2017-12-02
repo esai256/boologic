@@ -6,6 +6,7 @@ define(["exports", "../node_modules/lodash/lodash.js"], function (exports, _loda
     });
     exports.POSSIBILLITY_ENUM = undefined;
     exports.checkIfValueMatchesData = checkIfValueMatchesData;
+    exports.checkIfDataMatchesData = checkIfDataMatchesData;
 
     var _lodash2 = _interopRequireDefault(_lodash);
 
@@ -13,6 +14,21 @@ define(["exports", "../node_modules/lodash/lodash.js"], function (exports, _loda
         return obj && obj.__esModule ? obj : {
             default: obj
         };
+    }
+
+    function _defineProperty(obj, key, value) {
+        if (key in obj) {
+            Object.defineProperty(obj, key, {
+                value: value,
+                enumerable: true,
+                configurable: true,
+                writable: true
+            });
+        } else {
+            obj[key] = value;
+        }
+
+        return obj;
     }
 
     var FIRST_INDEX = 0;
@@ -23,7 +39,7 @@ define(["exports", "../node_modules/lodash/lodash.js"], function (exports, _loda
         Possible: 2,
         Definitive: 3
     };
-
+    //{haus: "gelb"}{nationalität: "japaner", zigaretten: "parliament"}, [{nationalität: "japaner", zigaretten: "parliament"}]
     function checkIfValueMatchesData(value, data, dataCollection) {
         var key = _lodash2.default.keys(value)[FIRST_INDEX];
         var result = POSSIBILLITY_ENUM.NA;
@@ -64,6 +80,23 @@ define(["exports", "../node_modules/lodash/lodash.js"], function (exports, _loda
         } else {
             result = POSSIBILLITY_ENUM.Possible;
         }
+
+        return result;
+    }
+
+    function checkIfDataMatchesData(dataToCheck, data, dataCollection) {
+        var result = POSSIBILLITY_ENUM.NA;
+        var otherDataCollection = _lodash2.default.without(dataCollection, dataToCheck);
+
+        _lodash2.default.forEach(Object.keys(dataToCheck), function (propertyName) {
+            var valueToCheck = _defineProperty({}, propertyName, dataToCheck[propertyName]);
+            var partialResult = checkIfValueMatchesData(valueToCheck, data, otherDataCollection);
+
+            result = result == POSSIBILLITY_ENUM.NA || result > partialResult ? partialResult : result;
+
+            //stop iteration if Impossible is already reached
+            return result != POSSIBILLITY_ENUM.Impossible;
+        });
 
         return result;
     }
