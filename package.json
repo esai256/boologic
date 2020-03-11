@@ -1,20 +1,30 @@
 {
-  "dependencies": {
-    "gulp": "^3.9.1",
-    "lodash": "^4.17.4"
+  "name": "boologic",
+  "version": "0.0.0",
+  "description": "Boologic is a logic helper with which puzzles like this: https://en.wikipedia.org/wiki/Zebra_Puzzle can be solved.",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/esai256/boologic.git"
+  },
+  "author": "Elias Seichter (esai@posteo.org)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/esai256/boologic/issues"
   },
   "devDependencies": {
-    "babel-core": "^6.26.0",
-    "babel-plugin-transform-es2015-modules-amd": "^6.24.1",
-    "babel-preset-env": "^1.6.0",
-    "chai": "^4.1.2",
-    "gulp-babel": "^7.0.0",
-    "gulp-beautify": "^2.0.1",
-    "gulp-eslint": "^4.0.0",
-    "gulp-live-server": "^0.0.31",
-    "gulp-notify": "^3.0.0",
-    "gulp-plumber": "^1.1.0",
-    "gulp-sequence": "^0.4.6",
-    "requirejs": "^2.3.5"
-  }
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.10.0",
+    "eslint-plugin-jest": "^23.8.2",
+    "eslint-plugin-prettier": "^3.1.2",
+    "jest": "^25.1.0",
+    "prettier": "^1.19.1"
+  },
+  "homepage": "https://github.com/esai256/boologic#readme"
 }
