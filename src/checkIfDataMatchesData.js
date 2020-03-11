@@ -17,18 +17,6 @@ module.exports = function checkIfDataMatchesData(dataToCheck, data, dataCollecti
       otherDataCollection,
     );
 
-    // console.log('');
-    // console.log('');
-    // console.log('');
-    // console.log('===ESAI_DEBUG===');
-    // console.log(valueToCheck);
-    // console.log(partialResult);
-    // console.log(data, otherDataCollection);
-    // console.log('===/ESAI_DEBUG===');
-    // console.log('');
-    // console.log('');
-    // console.log('');
-
     result = result === Possibility.NA || result > partialResult
       ? partialResult
       : result;
